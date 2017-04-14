@@ -5,13 +5,13 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <suffix.version>SNAPSHOT</suffix.version>
+        <release.version>0.0.0-SNAPSHOT</release.version>
     </properties>
 
     <groupId>org.springframework</groupId>
     <artifactId>gs-spring-boot</artifactId>
     <packaging>war</packaging>
-    <version>0.0.0-${suffix.version}</version>
+    <version>${release.version}</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
