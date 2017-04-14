@@ -1,9 +1,11 @@
 node {
+   def VERSION
    stage('Update') { 
       git 'https://github.com/rachelcarmena/ci-cd-spring-boot-code.git'
    }
    stage('Build') {
-      sh "mvn clean package"
+      VERSION = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+      sh "mvn clean package -D release.version=${VERSION}"
    }
    stage('Unit test') {
       sh "mvn test"
@@ -17,8 +19,8 @@ node {
       archive 'target/*.war'
       //def REPO_URL = "your.ecr.domain.amazonws.com/ci-cd-lab:latest"
       //sh "aws ecr get-login --region eu-west-1"
-      
-      sh "docker build -t ci-cd-lab ."
+
+      sh "docker build --build-arg release_version=${VERSION} -t ci-cd-lab ."
       //sh "docker tag ci-cd-lab:latest ${REPO_URL}"
       
       //sh "docker push ${REPO_URL}"
